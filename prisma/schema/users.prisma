@@ -1,0 +1,8 @@
+model Users {
+  id    Int     @id @default(autoincrement())
+  name  String
+  email String  @unique
+  posts Posts[]
+
+  @@map("users")
+}

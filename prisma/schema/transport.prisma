@@ -1,0 +1,38 @@
+model Transport {
+  id               Int     @id @default(autoincrement())
+  nameAuto         String  @map("name_auto")
+  fullSpeed        Int?    @map("full_speed")
+  speed100Time     Float?  @map("speed_100_time")
+  speedMaxTime     Float?  @map("speed_max_time")
+  volumeTank       Int?    @map("volume_tank")
+  costLiter        Int?    @map("cost_liter")
+  typeTank         String? @map("type_tank")
+  slots            Int?
+  price            Int?
+  seats            Int?
+  repairWithoutIns Int?    @map("repair_without_ins")
+  repairLiteIns    Int?    @map("repair_lite_ins")
+  repairStandIns   Int?    @map("repair_stand_ins")
+  repairExcIns     Int?    @map("repair_exc_ins")
+  liteInsurance    Int?    @map("lite_insurance")
+  standInsurance   Int?    @map("stand_insurance")
+  excInsurance     Int?    @map("exc_insurance")
+  uniqueName       String  @map("unique_name")
+  typeBody         String  @map("type_body")
+  showroom         String?
+  EPP              String? @map("epp")
+  city             String
+  stageCounter     Int?    @map("stage_counter")
+  paintInter       String? @map("paint_inter")
+  paintFirst       String? @map("paint_first")
+  paintSecond      String? @map("paint_second")
+  paintThird       String? @map("paint_third")
+  antichrome       Int?
+  accessories      String?
+  rims             String?
+  gosCostOld       Int?    @map("gos_cost_old")
+  class            String?
+  units            Int?
+
+  @@map("transport")
+}

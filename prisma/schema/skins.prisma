@@ -1,0 +1,10 @@
+model Skins {
+  id       Int    @id @default(autoincrement())
+  name     String
+  price    Int
+  shop     String
+  gender   String
+  timeYear String @map("time_year")
+
+  @@map("skins")
+}

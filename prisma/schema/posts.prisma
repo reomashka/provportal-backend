@@ -1,0 +1,9 @@
+model Posts {
+  id     Int     @id @default(autoincrement())
+  title  String
+  tage   String?
+  userId Int
+  user   Users   @relation(fields: [userId], references: [id])
+
+  @@map("posts")
+}

@@ -1,0 +1,9 @@
+-- AlterTable
+ALTER TABLE "transport" ALTER COLUMN "paint_inter" DROP NOT NULL,
+ALTER COLUMN "paint_first" DROP NOT NULL,
+ALTER COLUMN "paint_second" DROP NOT NULL,
+ALTER COLUMN "paint_third" DROP NOT NULL,
+ALTER COLUMN "antichrome" DROP NOT NULL,
+ALTER COLUMN "accessories" DROP NOT NULL,
+ALTER COLUMN "rims" DROP NOT NULL,
+ALTER COLUMN "epp" DROP NOT NULL;
