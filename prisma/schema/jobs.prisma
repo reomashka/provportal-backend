@@ -1,7 +1,7 @@
 model Jobs {
     id Int @id @default(autoincrement())
 
-    uniqueName          String @unique
+    uniqueName          String @unique @map("unique_name")
     name                String
     lvl                 Int
     city                String

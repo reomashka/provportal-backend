@@ -1,15 +1,18 @@
-import { Controller, Get, Query } from "@nestjs/common";
-import { TransportService } from "./transport.service";
+import { Controller, Get, Param, ParseIntPipe, Query } from '@nestjs/common';
+import { TransportService } from './transport.service';
+import { TransportQuery } from './transport.service';
 
-@Controller("transport")
+@Controller('transport')
 export class TransportController {
   constructor(private readonly transportService: TransportService) {}
 
-  @Get()
-  async getAll(
-    @Query("order") order: "asc" | "desc",
-    @Query("class") classType: "passenger" | "moto",
-  ) {
-    return this.transportService.findAll({ order, class: classType });
+  @Get('get-all')
+  async getAll(@Query() query: TransportQuery) {
+    return this.transportService.getAll(query);
+  }
+
+  @Get('get-one/:id')
+  async getOneTransport(@Param('id', ParseIntPipe) id: number) {
+    return this.transportService.getOne(id);
   }
 }
