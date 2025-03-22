@@ -7,7 +7,7 @@ export class JobsService {
   constructor(private readonly prisma: PrismaService) {}
 
   getJobs() {
-    return this.prisma.jobs.findMany();
+    return this.prisma.jobs.findMany({ orderBy: { lvl: 'asc' } });
   }
 
   async createJob(data: Prisma.JobsCreateInput) {

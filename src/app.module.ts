@@ -1,4 +1,5 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { ThrottlerModule } from '@nestjs/throttler';
 import { TransportModule } from './transport/transport.module';
 import { OnlineModule } from './online/online.module';
 import { UsersModule } from './users/users.module';
