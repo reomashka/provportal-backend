@@ -11,12 +11,13 @@ services:
     env_file:
       - .env
     depends_on:
-      - postgresql
+      - postgres
     volumes:
       - .:/app
       - /app/node_modules
+    restart: always
 
-  postgresql:
+  postgres:
     image: postgres:17
     container_name: postgres
     environment:
