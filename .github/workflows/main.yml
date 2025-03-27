@@ -1,0 +1,20 @@
+name: deploy_pp_backend
+on:
+  push:
+    branches:
+      - main
+
+env:
+  SERVER_HOST: 212.193.31.114
+  SERVER_USER: root
+  SERVER_PATH: /srv/provportal-backend
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install deps
+        run: npm i
