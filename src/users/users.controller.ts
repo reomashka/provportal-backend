@@ -7,6 +7,6 @@ export class UsersController {
 
   @Get()
   async getFirst() {
-    return this.usersService.findAll();
+    return 'guli guli';
   }
 }
