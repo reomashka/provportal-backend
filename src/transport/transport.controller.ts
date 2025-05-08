@@ -1,4 +1,4 @@
-import { Controller, Get, Param, ParseIntPipe, Query } from '@nestjs/common';
+import { Controller, Get, Param, ParseIntPipe, Query, Request } from '@nestjs/common';
 import { TransportService } from './transport.service';
 import { TransportQuery } from './transport.service';
 
@@ -14,5 +14,10 @@ export class TransportController {
   @Get('get-one/:id')
   async getOneTransport(@Param('id', ParseIntPipe) id: number) {
     return this.transportService.getOne(id);
+  }
+
+  @Get('likes/:id')
+  async getUserLikedProducts(@Param('id') id: string) {
+    return this.transportService.getLikedTransport(Number(id));
   }
 }

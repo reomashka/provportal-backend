@@ -33,6 +33,7 @@ model Transport {
   gosCostOld       Int?    @map("gos_cost_old")
   class            String?
   units            Int?
+  likes            Likes[]
 
   @@map("transport")
 }
