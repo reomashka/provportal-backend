@@ -72,7 +72,7 @@ model Transport {
     antichrome       Int?
     accessories      String?
     rims             String?
-    gosCostOld       Int?    @map("gos_cost_old")
+    gosCostOld       Int[]   @map("gos_cost_old")
     class            String?
     units            Int?
     likes            Likes[]

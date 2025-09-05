@@ -1,9 +1,16 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaService } from '@/prisma/prisma.service';
+import { Injectable, NotFoundException } from "@nestjs/common";
+import { PrismaService } from "@/prisma/prisma.service";
 
 export interface TransportQuery {
-  order?: 'asc' | 'desc';
-  class?: 'moto' | 'passenger' | 'cargo' | 'public' | 'container' | 'exclusive' | 'fraction';
+  order?: "asc" | "desc";
+  class?:
+    | "moto"
+    | "passenger"
+    | "cargo"
+    | "public"
+    | "container"
+    | "exclusive"
+    | "fraction";
 }
 
 @Injectable()
@@ -14,14 +21,16 @@ export class TransportService {
     const transport = await this.prisma.transport.findUnique({
       where: { id },
     });
-    if (!transport || transport.class === 'fraction') {
-      throw new NotFoundException(`Transport with ID ${id} not found or it is fraction transport!`);
+    if (!transport || transport.class === "fraction") {
+      throw new NotFoundException(
+        `Transport with ID ${id} not found or it is fraction transport!`
+      );
     }
     return transport;
   }
 
   getAll(query: TransportQuery = {}) {
-    const order = query.order || 'asc';
+    const order = query.order || "asc";
     const transportClass = query.class;
 
     return this.prisma.transport.findMany({
@@ -41,7 +50,7 @@ export class TransportService {
     });
 
     if (!user) {
-      throw new NotFoundException('Пользователь не найден');
+      throw new NotFoundException("Пользователь не найден");
     }
 
     return user;
