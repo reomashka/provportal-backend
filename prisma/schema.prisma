@@ -42,6 +42,7 @@ model Transport {
     uniqueName             String          @map("unique_name")
     typeBody               CarType         @map("type_body")
     showroom               Showroom?
+    driveType              DriveType?
     epp                    Boolean?
     city                   City?
     country                CountryOrigin?
@@ -187,6 +188,12 @@ enum CarType {
     PICKUP      @map("Пикап")
     CABRIOLET   @map("Кабриолет")
     MOTOCYCLE   @map("Мотоцикл")
+}
+
+enum DriveType {
+    FRONT @map("Передний")
+    REAR  @map("Задний")
+    ALL   @map("Полный")
 }
 
 enum TokenType {
