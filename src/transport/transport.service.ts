@@ -1,16 +1,10 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { PrismaService } from "@/prisma/prisma.service";
+import { TransportClass } from "@prisma/client";
 
 export interface TransportQuery {
   order?: "asc" | "desc";
-  class?:
-    | "moto"
-    | "passenger"
-    | "cargo"
-    | "public"
-    | "container"
-    | "exclusive"
-    | "fraction";
+  class?: TransportClass;
 }
 
 @Injectable()
@@ -21,7 +15,7 @@ export class TransportService {
     const transport = await this.prisma.transport.findUnique({
       where: { id },
     });
-    if (!transport || transport.class === "fraction") {
+    if (!transport || transport.class === TransportClass.FRACTION) {
       throw new NotFoundException(
         `Transport with ID ${id} not found or it is fraction transport!`
       );
@@ -41,18 +35,5 @@ export class TransportService {
         price: order,
       },
     });
-  }
-
-  async getLikedTransport(userId: number) {
-    const user = await this.prisma.user.findUnique({
-      where: { id: userId },
-      include: { likes: { include: { transport: true } } },
-    });
-
-    if (!user) {
-      throw new NotFoundException("Пользователь не найден");
-    }
-
-    return user;
   }
 }
