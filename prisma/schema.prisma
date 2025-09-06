@@ -8,93 +8,66 @@ datasource db {
 }
 
 model User {
-    id          Int     @id @default(autoincrement())
-    email       String  @unique
-    password    String
-    displayName String  @map("display_name")
-    picture     String?
-
+    id                 Int        @id @default(autoincrement())
+    email              String     @unique
+    password           String
+    displayName        String     @map("display_name")
+    picture            String?
     role               UserRole   @default(REGULAR)
     isVerified         Boolean    @default(false) @map("is_verified")
     isTwoFactorEnabled Boolean    @default(false) @map("is_two_factor_enabled")
     method             AuthMethod
-
-    accounts Account[]
-
-    createdAt DateTime @default(now()) @map("created_at")
-    updatedAt DateTime @updatedAt @map("updated_at")
-
-    likes Likes[]
+    createdAt          DateTime   @default(now()) @map("created_at")
+    updatedAt          DateTime   @updatedAt @map("updated_at")
+    accounts           Account[]
 
     @@map("users")
 }
 
-enum UserRole {
-    REGULAR
-    ADMIN
-}
-
-enum AuthMethod {
-    CREDENTIALS
-    GOOGLE
-    YANDEX
-}
-
 model Transport {
-    id               Int     @id @default(autoincrement())
-    nameAuto         String  @map("name_auto")
-    fullSpeed        Int?    @map("full_speed")
-    speed100Time     Float?  @map("speed_100_time")
-    speedMaxTime     Float?  @map("speed_max_time")
-    volumeTank       Int?    @map("volume_tank")
-    costLiter        Int?    @map("cost_liter")
-    typeTank         String? @map("type_tank")
-    slots            Int?
-    price            Int?
-    seats            Int?
-    repairWithoutIns Int?    @map("repair_without_ins")
-    repairLiteIns    Int?    @map("repair_lite_ins")
-    repairStandIns   Int?    @map("repair_stand_ins")
-    repairExcIns     Int?    @map("repair_exc_ins")
-    liteInsurance    Int?    @map("lite_insurance")
-    standInsurance   Int?    @map("stand_insurance")
-    excInsurance     Int?    @map("exc_insurance")
-    uniqueName       String  @map("unique_name")
-    typeBody         String  @map("type_body")
-    showroom         String?
-    EPP              String? @map("epp")
-    city             String
-    stageCounter     Int?    @map("stage_counter")
-    paintInter       String? @map("paint_inter")
-    paintFirst       String? @map("paint_first")
-    paintSecond      String? @map("paint_second")
-    paintThird       String? @map("paint_third")
-    antichrome       Int?
-    accessories      String?
-    rims             String?
-    gosCostOld       Int[]   @map("gos_cost_old")
-    class            String?
-    units            Int?
-    likes            Likes[]
+    id                     Int             @id @default(autoincrement())
+    nameAuto               String          @map("name_auto")
+    price                  Int?
+    fullSpeed              Int?            @map("full_speed")
+    speed100Time           Float?          @map("speed_100_time")
+    speedMaxTime           Float?          @map("speed_max_time")
+    volumeTank             Int?            @map("volume_tank")
+    fuelType               FuelType?       @map("fuel_type")
+    slots                  Int?
+    seats                  Int?
+    liteInsurance          Int?            @map("lite_insurance")
+    repairWithoutInsurance Int?            @map("repair_without_ins")
+    hasStandIns            Boolean?        @default(false) @map("has_stand_ins")
+    hasExcIns              Boolean?        @default(false) @map("has_exc_ins")
+    uniqueName             String          @map("unique_name")
+    typeBody               CarType         @map("type_body")
+    showroom               Showroom?
+    epp                    Boolean?
+    city                   City?
+    country                CountryOrigin?
+    stageCounter           Int?            @map("stage_counter")
+    paintInter             String?         @map("paint_inter")
+    paintFirst             String?         @map("paint_first")
+    paintSecond            String?         @map("paint_second")
+    paintThird             String?         @map("paint_third")
+    antichrome             Boolean?
+    accessories            String?
+    rims                   String?
+    gosCostOld             Int[]           @map("gos_cost_old")
+    class                  TransportClass?
+    units                  Int?
 
     @@map("transport")
 }
 
 model Token {
-    id Int @id @default(autoincrement())
-
+    id        Int       @id @default(autoincrement())
     email     String
     token     String
     type      TokenType
     expiresIn DateTime  @map("expires_in")
 
     @@map("tokens")
-}
-
-enum TokenType {
-    VERIFICATION
-    TWO_FACTOR
-    PASSWORD_RESET
 }
 
 model Skins {
@@ -108,20 +81,8 @@ model Skins {
     @@map("skins")
 }
 
-model Likes {
-    id          Int       @id @default(autoincrement())
-    users       User      @relation(fields: [userId], references: [id])
-    userId      Int       @map("user_id")
-    transport   Transport @relation(fields: [transportId], references: [id])
-    transportId Int       @map("transport_id")
-
-    @@unique([userId, transportId])
-    @@map("likes")
-}
-
 model Jobs {
-    id Int @id @default(autoincrement())
-
+    id                  Int    @id @default(autoincrement())
     uniqueName          String @unique @map("unique_name")
     name                String
     lvl                 Int
@@ -134,20 +95,102 @@ model Jobs {
 }
 
 model Account {
-    id Int @id @default(autoincrement())
-
-    type     String
-    provider String
-
-    refreshToken String? @map("refresh_token")
-    accessToken  String? @map("access_token")
-    expiresAt    Int     @map("expires_at")
-
-    user   User? @relation(fields: [userId], references: [id])
-    userId Int?  @map("user_id")
-
-    createdAt DateTime @default(now()) @map("created_at")
-    updatedAt DateTime @updatedAt @map("updated_at")
+    id           Int      @id @default(autoincrement())
+    type         String
+    provider     String
+    refreshToken String?  @map("refresh_token")
+    accessToken  String?  @map("access_token")
+    expiresAt    Int      @map("expires_at")
+    userId       Int?     @map("user_id")
+    createdAt    DateTime @default(now()) @map("created_at")
+    updatedAt    DateTime @updatedAt @map("updated_at")
+    user         User?    @relation(fields: [userId], references: [id])
 
     @@map("accounts")
+}
+
+enum UserRole {
+    REGULAR
+    ADMIN
+}
+
+enum AuthMethod {
+    CREDENTIALS
+    GOOGLE
+    YANDEX
+}
+
+enum TransportClass {
+    PASSENGER
+    CARGO
+    MOTO
+    PUBLIC
+    CONTAINER
+    EXCLUSIVE
+    FRACTION
+}
+
+enum Showroom {
+    AVTOMAKS      @map("АвтоМакс")
+    MERCURY_AUTO  @map("Mercury-Auto")
+    ROFL          @map("РОФЛ")
+    WORLD_OF_AUTO @map("World of Auto")
+}
+
+enum FuelType {
+    AI92     @map("АИ-92")
+    AI95     @map("АИ-95")
+    AI98     @map("АИ-98")
+    AI100    @map("АИ-100")
+    DT       @map("ДТ")
+    ELECTRIC @map("Электричество")
+}
+
+enum CountryOrigin {
+    USSR_RUSSIA    @map("СССР/Россия")
+    USA            @map("США")
+    GERMANY        @map("Германия")
+    FRANCE         @map("Франция")
+    ITALY          @map("Италия")
+    SWEDEN         @map("Швеция")
+    UK             @map("Англия")
+    JAPAN          @map("Япония")
+    CZECH_REPUBLIC @map("Чехия")
+    UKRAINE        @map("Украина")
+    BELARUS        @map("Беларусь")
+    AUSTRIA        @map("Австрия")
+    SOUTH_KOREA    @map("Южная Корея")
+    USSR_HUNGARY   @map("СССР/Венгрия")
+    USSR_UKRAINE   @map("СССР/Украина")
+    CHINA          @map("Китай")
+}
+
+enum City {
+    PRIVOLZHSK @map("Приволжск")
+    NEVSKY     @map("Невский")
+    MIRNY      @map("Мирный")
+}
+
+enum CarType {
+    HATCHBACK   @map("Хэтчбек")
+    SEDAN       @map("Седан")
+    COUPE       @map("Купе")
+    LIFTBACK    @map("Лифтбек")
+    UNIVERSAL   @map("Универсал")
+    CROSSOVER   @map("Кроссовер")
+    VAN         @map("Фургон")
+    VNEDOROZNIK @map("Внедорожник")
+    MINIBUS     @map("Микроавтобус")
+    BUS         @map("Автобус")
+    TYAGACH     @map("Тягач")
+    TRUCK       @map("Грузовик")
+    PICKUP      @map("Пикап")
+    CABRIOLET   @map("Кабриолет")
+    MOTOCYCLE   @map("Мотоцикл")
+}
+
+enum TokenType {
+    VERIFICATION
+    TWO_FACTOR
+    PASSWORD_RESET
 }
