@@ -136,6 +136,7 @@ enum Showroom {
     MERCURY_AUTO  @map("Mercury-Auto")
     ROFL          @map("РОФЛ")
     WORLD_OF_AUTO @map("World of Auto")
+    OGONEK        @map("Тихий Огонёк")
 }
 
 enum FuelType {
