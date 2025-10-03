@@ -1,13 +1,13 @@
-import { Injectable } from '@nestjs/common';
-import { PrismaService } from '@/prisma/prisma.service';
-import { Prisma } from '@prisma/client';
+import { Injectable } from "@nestjs/common";
+import { PrismaService } from "@/prisma/prisma.service";
+import { Prisma } from "@prisma/client";
 
 @Injectable()
 export class JobsService {
   constructor(private readonly prisma: PrismaService) {}
 
   getJobs() {
-    return this.prisma.jobs.findMany({ orderBy: { lvl: 'asc' } });
+    return this.prisma.jobs.findMany({ orderBy: { lvl: "asc" } });
   }
 
   async createJob(data: Prisma.JobsCreateInput) {

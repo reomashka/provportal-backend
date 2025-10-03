@@ -14,17 +14,12 @@ export class TransportController {
   constructor(private readonly transportService: TransportService) {}
 
   @Get("get-all")
-  async getAll(@Query() query: TransportQuery) {
+  async getAllTransport(@Query() query: TransportQuery) {
     return this.transportService.getAll(query);
   }
 
   @Get("get-one/:id")
-  async getOneTransport(@Param("id", ParseIntPipe) id: number) {
-    return this.transportService.getOne(id);
+  async getCurrentTransport(@Param("id", ParseIntPipe) id: number) {
+    return this.transportService.getCurrentTransport(id);
   }
-
-  // @Get('likes/:id')
-  // async getUserLikedProducts(@Param('id') id: string) {
-  //   return this.transportService.getLikedTransport(Number(id));
-  // }
 }

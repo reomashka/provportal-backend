@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
-import axios from 'axios';
+import { Injectable } from "@nestjs/common";
+import axios from "axios";
 
 @Injectable()
 export class OnlineService {
-  private readonly url = 'https://waste.fantastic-game.ru/tbru/report.txt';
+  private readonly url = "https://waste.fantastic-game.ru/tbru/report.txt";
 
   async getServers() {
     try {
@@ -11,10 +11,10 @@ export class OnlineService {
       const data = response.data;
 
       // Разбираем строки
-      const lines = data.split('\n').filter((line) => line.trim() !== '');
-      if (lines.length === 0) return { error: 'Empty file' };
+      const lines = data.split("\n").filter((line) => line.trim() !== "");
+      if (lines.length === 0) return { error: "Empty file" };
 
-      const serversData = lines[0].split(' ').slice(1); // Пропускаем время
+      const serversData = lines[0].split(" ").slice(1); // Пропускаем время
       const result = serversData
         .map((server) => {
           const match = server.match(/^(\d)(\d)(\d)(\d{3,4})\/(\d{4})$/);
@@ -23,7 +23,7 @@ export class OnlineService {
           const [, S, , O, X, slots] = match;
           return {
             server: Number(S),
-            online: X === '0000' ? 0 : Number(X.replace(/^0+/, '')),
+            online: X === "0000" ? 0 : Number(X.replace(/^0+/, "")),
             slots: Number(slots),
           };
         })
@@ -31,7 +31,7 @@ export class OnlineService {
 
       return result;
     } catch (error) {
-      return { error: 'Failed to fetch data', details: error.message };
+      return { error: "Failed to fetch data", details: error.message };
     }
   }
 }

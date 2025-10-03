@@ -11,15 +11,17 @@ export interface TransportQuery {
 export class TransportService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async getOne(id: number) {
+  public async getCurrentTransport(id: number) {
     const transport = await this.prisma.transport.findUnique({
       where: { id },
     });
+
     if (!transport || transport.class === TransportClass.FRACTION) {
       throw new NotFoundException(
         `Transport with ID ${id} not found or it is fraction transport!`
       );
     }
+
     return transport;
   }
 

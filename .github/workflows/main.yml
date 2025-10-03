@@ -1,32 +1,28 @@
-name: Deploy buy runner
+name: Deploy backend
 
 on:
-  push:
-    branches: ['master']
+    push:
+        branches:
+            - main
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout repo
-        uses: actions/checkout@v3
+    deploy:
+        runs-on: ubuntu-latest
 
-  prepare-environment:
-    runs-on: self-hosted
-    needs: test
-    steps:
-      - name: Stop and remove containers, networks
-        run: docker-compose down
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
 
-      - name: Remove unused data
-        run: docker system prune -a -f
-
-  deploy:
-    runs-on: self-hosted
-    needs: prepare-environment
-    steps:
-      - name: checkout repo
-        uses: actions/checkout@v3
-
-      - name: docker-compose
-        run: docker-compose up -d
+            - name: Deploy via SSH
+              uses: appleboy/ssh-action@v1.1.0
+              with:
+                  host: ${{ secrets.SERVER_HOST }}
+                  username: ${{ secrets.SERVER_USER }}
+                  key: ${{ secrets.PRIVATE_KEY }}
+                  script: |
+                      cd /opt/provportal/backend
+                      cd /opt/provportal/backend
+                      git pull origin main
+                      docker compose down
+                      docker compose build --no-cache
+                      docker compose up -d
