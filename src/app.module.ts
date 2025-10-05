@@ -8,6 +8,7 @@ import { AuthModule } from "./auth/auth.module";
 import { UserModule } from "./user/user.module";
 import { PrismaModule } from "./prisma/prisma.module";
 import { FileModule } from "./file/file.module";
+import { AnnouncementModule } from './announcement/announcement.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { FileModule } from "./file/file.module";
     UserModule,
     PrismaModule,
     FileModule,
+    AnnouncementModule,
   ],
   controllers: [],
   providers: [],

@@ -1,60 +1,60 @@
 services:
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: backend-pp
-    ports:
-      - "3002:3000"
-    env_file:
-      - .env
-    depends_on:
-      - postgres
-      - redis
-    volumes:
-      - /app/node_modules
-      - ./uploads:/app/uploads
-    networks:
-      - shared_net
-      - backend_network
-    restart: always
-    tty: true
-    stdin_open: true
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: backend-pp
+        ports:
+            - "3002:3000"
+        env_file:
+            - .env
+        depends_on:
+            - postgres
+            - redis
+        volumes:
+            - /app/node_modules
+            - ./uploads:/app/uploads
+        networks:
+            - shared_net
+            - backend_network
+        restart: always
+        tty: true
+        stdin_open: true
 
-  postgres:
-    container_name: postgres-pp
-    image: postgres:15
-    ports:
-      - "5433:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    networks:
-      - backend_network
-      - shared_net
-    env_file:
-      - .env
-    restart: always
+    postgres:
+        container_name: postgres-pp
+        image: postgres:15
+        ports:
+            - "5433:5432"
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+        networks:
+            - backend_network
+            - shared_net
+        env_file:
+            - .env
+        restart: always
 
-  redis:
-    container_name: redis-pp
-    image: redis:7
-    restart: always
-    ports:
-      - "6380:6379"
-    command: redis-server --requirepass ${REDIS_PASSWORD} --appendonly yes --appendfsync always
-    volumes:
-      - redis_data:/data
-    networks:
-      - backend_network
-    env_file:
-      - .env
+    redis:
+        container_name: redis-pp
+        image: redis:7
+        restart: always
+        ports:
+            - "6380:6379"
+        command: redis-server --requirepass ${REDIS_PASSWORD} --appendonly yes --appendfsync always
+        volumes:
+            - redis_data:/data
+        networks:
+            - backend_network
+        env_file:
+            - .env
 
 volumes:
-  postgres_data:
-  redis_data:
+    postgres_data:
+    redis_data:
 
 networks:
-  shared_net:
-    external: true
-  backend_network:
-    driver: bridge
+    shared_net:
+        external: true
+    backend_network:
+        driver: bridge
