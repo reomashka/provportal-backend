@@ -7,25 +7,25 @@ import { IS_DEV_ENV } from "./libs/common/utils/is-dev.util";
 import { AuthModule } from "./auth/auth.module";
 import { UserModule } from "./user/user.module";
 import { PrismaModule } from "./prisma/prisma.module";
-import { FileModule } from "./file/file.module";
-import { AnnouncementModule } from './announcement/announcement.module';
+import { AnnouncementModule } from "./announcement/announcement.module";
+import { UploadModule } from "./upload/upload.module";
 
 @Module({
-  imports: [
-    TransportModule,
-    OnlineModule,
-    JobsModule,
-    ConfigModule.forRoot({
-      ignoreEnvFile: !IS_DEV_ENV,
-      isGlobal: true,
-    }),
-    AuthModule,
-    UserModule,
-    PrismaModule,
-    FileModule,
-    AnnouncementModule,
-  ],
-  controllers: [],
-  providers: [],
+    imports: [
+        TransportModule,
+        OnlineModule,
+        JobsModule,
+        ConfigModule.forRoot({
+            ignoreEnvFile: !IS_DEV_ENV,
+            isGlobal: true,
+        }),
+        AuthModule,
+        UserModule,
+        PrismaModule,
+        AnnouncementModule,
+        UploadModule,
+    ],
+    controllers: [],
+    providers: [],
 })
 export class AppModule {}
