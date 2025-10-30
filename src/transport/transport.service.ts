@@ -25,23 +25,9 @@ export class TransportService {
         return transport;
     }
 
-    private readonly classMap: Record<
-        "moto" | "passenger" | "cargo" | "public" | "container" | "exclusive",
-        TransportClass
-    > = {
-        passenger: TransportClass.PASSENGER,
-        cargo: TransportClass.CARGO,
-        public: TransportClass.PUBLIC,
-        container: TransportClass.CONTAINER,
-        exclusive: TransportClass.EXCLUSIVE,
-        moto: TransportClass.MOTO,
-    };
-
     public async getAll(query: TransportQuery = {}) {
         const order = query.order || "asc";
-        const transportClass = query.class
-            ? this.classMap[query.class as keyof typeof this.classMap]
-            : undefined;
+        const transportClass = query.class;
 
         return this.prisma.transport.findMany({
             where: {
