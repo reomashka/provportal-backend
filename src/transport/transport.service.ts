@@ -38,4 +38,13 @@ export class TransportService {
             },
         });
     }
+
+    public async getNamesTransport() {
+        return this.prisma.transport.findMany({
+            select: {
+                id: true,
+                nameAuto: true,
+            },
+        });
+    }
 }
