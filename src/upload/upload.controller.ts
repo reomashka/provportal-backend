@@ -31,13 +31,10 @@ export class UploadController {
         @Body("title") title: string
     ) {
         try {
-            // Путь к исходному файлу
             const oldPath = `./uploads/news/${file.filename}`;
-            // Путь к новому файлу (по названию)
             const newFilename = `${title}${extname(file.originalname)}`;
             const newPath = `./uploads/news/${newFilename}`;
 
-            // Переименовываем файл
             fs.renameSync(oldPath, newPath);
 
             return {

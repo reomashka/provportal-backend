@@ -10,7 +10,6 @@ export class OnlineService {
             const response = await axios.get(this.url);
             const data = response.data;
 
-            // Разбираем строки
             const lines = data.split("\n").filter((line) => line.trim() !== "");
             if (lines.length === 0) return { error: "Empty file" };
 
