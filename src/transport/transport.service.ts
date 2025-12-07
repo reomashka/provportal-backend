@@ -1,50 +1,51 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
-import { PrismaService } from "@/prisma/prisma.service";
-import { TransportClass } from "@prisma/client";
+import { Inject, Injectable } from "@nestjs/common";
+import { NodePgDatabase } from "drizzle-orm/node-postgres";
+import * as schema from "../database/schema";
+import { DrizzleAsyncProvider } from "@/database/database.provider";
+import * as orm from "drizzle-orm";
 
-export interface TransportQuery {
-    order?: "asc" | "desc";
-    class?: TransportClass;
-}
+// export interface TransportQuery {
+//     order?: "asc" | "desc";
+//     class?: TransportClassType;
+// }
 
 @Injectable()
 export class TransportService {
-    constructor(private readonly prisma: PrismaService) {}
+    constructor(
+        @Inject(DrizzleAsyncProvider)
+        private db: NodePgDatabase<typeof schema>
+    ) {}
 
     public async getCurrentTransport(id: number) {
-        const transport = await this.prisma.transport.findUnique({
-            where: { id },
-        });
+        const transport = await this.db
+            .select()
+            .from(schema.transport)
+            .where(orm.eq(schema.transport.id, id));
 
-        if (!transport || transport.class === TransportClass.FRACTION) {
-            throw new NotFoundException(
-                `Transport with ID ${id} not found or it is fraction transport!`
-            );
-        }
-
-        return transport;
-    }
-
-    public async getAll(query: TransportQuery = {}) {
-        const order = query.order || "asc";
-        const transportClass = query.class;
-
-        return this.prisma.transport.findMany({
-            where: {
-                class: transportClass,
-            },
-            orderBy: {
-                price: order,
-            },
-        });
+        return transport[0];
     }
 
     public async getNamesTransport() {
-        return this.prisma.transport.findMany({
-            select: {
-                id: true,
-                nameAuto: true,
-            },
-        });
+        const transportNames = await this.db
+            .select({
+                id: schema.transport.id,
+                name: schema.transport.name,
+            })
+            .from(schema.transport);
+
+        return transportNames;
     }
+
+    // public async getAll(query: TransportQuery = {}) {
+    //     const order = query.order || "asc";
+    //     const transportClass = query.class;
+
+    //     const transport = await this.db
+    //         .select()
+    //         .from(schema.transport)
+    //         .where(orm.eq(schema.transport, transportClass))
+    //         .orderBy(schema.transport.price);
+
+    //     return transport;
+    // }
 }
