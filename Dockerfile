@@ -11,4 +11,4 @@ RUN yarn build
 
 EXPOSE 3000
 
-CMD ["sh", "-c", "npx drizzle-kit migrate && node dist/main"]
+CMD ["sh", "-c", "npx drizzle-kit migrate && node dist/src/main"]
