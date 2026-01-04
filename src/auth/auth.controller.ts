@@ -14,10 +14,14 @@ import { AuthService } from "./auth.service";
 import { RegisterUser } from "./dto/registerUser.dto";
 import { LoginUser } from "./dto/loginUser.dto";
 import { AuthGuard } from "@nestjs/passport";
+import { ConfigService } from "@nestjs/config";
 
 @Controller("auth")
 export class AuthController {
-    constructor(private readonly authService: AuthService) {}
+    constructor(
+        private readonly authService: AuthService,
+        private configService: ConfigService
+    ) {}
 
     @Post("register")
     public async register(@Body() dto: RegisterUser, @Req() req) {
@@ -45,7 +49,9 @@ export class AuthController {
     @UseGuards(AuthGuard("yandex"))
     async yandexAuthRedirect(@Req() req, @Res() res) {
         await this.authService.saveSession(req, req.user.id);
-        return res.redirect("http://localhost:5173");
+        return res.redirect(
+            this.configService.getOrThrow<string>("FRONTEND_URL")
+        );
     }
 
     @Get("google")
@@ -56,6 +62,8 @@ export class AuthController {
     @UseGuards(AuthGuard("google"))
     async googleAuthRedirect(@Req() req, @Res() res) {
         await this.authService.saveSession(req, req.user.id);
-        return res.redirect("http://localhost:5173");
+        return res.redirect(
+            this.configService.getOrThrow<string>("FRONTEND_URL")
+        );
     }
 }

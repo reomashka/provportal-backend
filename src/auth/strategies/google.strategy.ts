@@ -1,32 +1,32 @@
 import { Injectable } from "@nestjs/common";
 import { PassportStrategy } from "@nestjs/passport";
 import { Strategy as GoogleOAuthStrategy } from "passport-google-oauth20";
-import * as schema from "../../database/schema";
 import { AuthService } from "../auth.service";
+import { ConfigService } from "@nestjs/config";
 
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(
     GoogleOAuthStrategy,
     "google"
 ) {
-    constructor(private authService: AuthService) {
-        const clientId = process.env.GOOGLE_CLIENT_ID;
-        const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
-
-        if (!clientId || !clientSecret) {
-            throw new Error(
-                "GOOGLE_CLIENT_ID и GOOGLE_CLIENT_SECRET должны быть заданы"
-            );
-        }
-
+    constructor(authService: AuthService, configService: ConfigService) {
         super({
-            clientID: clientId,
-            clientSecret: clientSecret,
-            callbackURL: "http://localhost:3000/api/auth/google/callback",
+            clientID: configService.getOrThrow<string>("GOOGLE_CLIENT_ID"),
+            clientSecret: configService.getOrThrow<string>(
+                "GOOGLE_CLIENT_SECRET"
+            ),
+            callbackURL: `${configService.getOrThrow<string>("FRONTEND_URL")}/api/auth/google/callback`,
             scope: ["profile", "email"],
         });
+
+        this.authService = authService;
+        this.configService = configService;
+
         console.log("GoogleStrategy loaded");
     }
+
+    private authService: AuthService;
+    private configService: ConfigService;
 
     async validate(_, __, profile: any) {
         const user = await this.authService.validateOAuthLogin(
