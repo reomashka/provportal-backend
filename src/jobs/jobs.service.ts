@@ -13,39 +13,69 @@ export class JobsService {
 
     getJobs() {
         return this.db
-            .select()
+            .select({
+                id: schema.jobs.id,
+                name: schema.jobs.name,
+                lvl: schema.jobs.lvl,
+                about: schema.jobs.about,
+                description: schema.jobs.description,
+                salaries: orm.sql`coalesce(
+        json_agg(json_build_object(
+          'id', ${schema.jobCitySalaries.id},
+          'amount', ${schema.jobCitySalaries.amount},
+          'city', ${schema.jobCitySalaries.city},
+          'stops', ${schema.jobCitySalaries.stops},
+          'exp', ${schema.jobCitySalaries.exp},
+          'time', ${schema.jobCitySalaries.time}
+        )) filter (where ${schema.jobCitySalaries.id} is not null), '[]')`,
+            })
             .from(schema.jobs)
-            .orderBy(orm.asc(schema.jobs.lvl))
             .leftJoin(
                 schema.jobCitySalaries,
                 orm.eq(schema.jobCitySalaries.jobId, schema.jobs.id)
-            );
+            )
+            .groupBy(
+                schema.jobs.id,
+                schema.jobs.name,
+                schema.jobs.lvl,
+                schema.jobs.about,
+                schema.jobs.description
+            )
+            .orderBy(orm.asc(schema.jobs.lvl));
     }
 
-    // getCurrentJob(id: number) {
-    //     return this.prisma.job.findUnique({
-    //         where: { id },
-    //         include: {
-    //             salaries: true,
-    //         },
-    //     });
-    // }
+    public async getCurrentJob(id: number) {
+        const [result] = await this.db
+            .select({
+                id: schema.jobs.id,
+                name: schema.jobs.name,
+                lvl: schema.jobs.lvl,
+                about: schema.jobs.about,
+                description: schema.jobs.description,
+                salaries: orm.sql`coalesce(
+        json_agg(json_build_object(
+          'id', ${schema.jobCitySalaries.id},
+          'amount', ${schema.jobCitySalaries.amount},
+          'city', ${schema.jobCitySalaries.city},
+          'stops', ${schema.jobCitySalaries.stops},
+          'exp', ${schema.jobCitySalaries.exp},
+          'time', ${schema.jobCitySalaries.time}
+        )) filter (where ${schema.jobCitySalaries.id} is not null), '[]')`,
+            })
+            .from(schema.jobs)
+            .where(orm.eq(schema.jobs.id, id))
+            .leftJoin(
+                schema.jobCitySalaries,
+                orm.eq(schema.jobCitySalaries.jobId, schema.jobs.id)
+            )
+            .groupBy(
+                schema.jobs.id,
+                schema.jobs.name,
+                schema.jobs.lvl,
+                schema.jobs.about,
+                schema.jobs.description
+            );
 
-    // async createJob(data: Prisma.JobCreateInput) {
-    //     return this.prisma.job.create({
-    //         data,
-    //     });
-    // }
-
-    // async updateJob(id: number, data: Prisma.JobUncheckedUpdateInput) {
-    //     return this.prisma.job.update({
-    //         where: { id },
-    //         data: data,
-    //     });
-    // }
-
-    // async deleteJob(id: number) {
-    //     return this.prisma.job.delete({
-    //         where: { id: id },
-    //     });
+        return result;
+    }
 }

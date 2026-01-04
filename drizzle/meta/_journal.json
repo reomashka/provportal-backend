@@ -5,8 +5,22 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1765127180095,
-      "tag": "0000_daily_mother_askani",
+      "when": 1766926325008,
+      "tag": "0000_clear_pet_avengers",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1766948390748,
+      "tag": "0001_new_spyke",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1766950191629,
+      "tag": "0002_cultured_cobalt_man",
       "breakpoints": true
     }
   ]

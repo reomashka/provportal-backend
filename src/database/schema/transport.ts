@@ -18,6 +18,8 @@ export const TransportClass = pgEnum("transport_class", [
     "FRACTION",
 ]);
 
+export type TransportClassEnum = (typeof TransportClass.enumValues)[number];
+
 // Автосалоны
 export const Showroom = pgEnum("showroom", [
     "AVTOMAKS",

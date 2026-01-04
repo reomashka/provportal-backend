@@ -1,6 +1,6 @@
 {
-  "id": "4bfd87a6-1dd8-4a4b-b6f1-90c883814124",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "2de52f90-522f-4ae6-ab12-c35aabc16774",
+  "prevId": "4bfd87a6-1dd8-4a4b-b6f1-90c883814124",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -731,7 +731,7 @@
           "name": "token",
           "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "user_id": {
           "name": "user_id",
@@ -743,7 +743,7 @@
           "name": "expires_at",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         }
       },
       "indexes": {},
@@ -763,7 +763,15 @@
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
+      "uniqueConstraints": {
+        "email_verifications_token_unique": {
+          "name": "email_verifications_token_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "token"
+          ]
+        }
+      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false

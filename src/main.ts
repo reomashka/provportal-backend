@@ -1,6 +1,5 @@
 import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
-import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { ConfigService } from "@nestjs/config";
 import IOredis from "ioredis";
 
@@ -12,13 +11,14 @@ import { parseBoolean } from "./libs/common/utils/parse-boolean.util";
 import { RedisStore } from "connect-redis";
 
 import * as express from "express";
+import * as passport from "passport";
 import { join } from "path";
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
 
     const config = app.get(ConfigService);
-    // const redis = new IOredis(config.getOrThrow<string>("REDIS_URI"));
+    const redis = new IOredis(config.getOrThrow<string>("REDIS_URI"));
 
     app.use(cookieParser(config.getOrThrow<string>("COOKIES_SECRET")));
 
@@ -28,46 +28,38 @@ async function bootstrap() {
         })
     );
 
-    // app.use(
-    //     session({
-    //         secret: config.getOrThrow<string>("SESSION_SECRET"),
-    //         name: config.getOrThrow<string>("SESSION_NAME"),
-    //         resave: true,
-    //         saveUninitialized: false,
-    //         cookie: {
-    //             domain: config.getOrThrow<string>("SESSION_DOMAIN"),
-    //             maxAge: ms(config.getOrThrow("SESSION_MAX_AGE")),
-    //             httpOnly: parseBoolean(
-    //                 config.getOrThrow<string>("SESSION_HTTP_ONLY")
-    //             ),
-    //             secure: parseBoolean(
-    //                 config.getOrThrow<string>("SESSION_SECURE")
-    //             ),
-    //             sameSite: "lax",
-    //         },
-    //         store: new RedisStore({
-    //             client: redis,
-    //             prefix: config.getOrThrow<string>("SESSION_FOLDER"),
-    //         }),
-    //     })
-    // );
+    app.use(
+        (session as any)({
+            secret: config.getOrThrow<string>("SESSION_SECRET"),
+            name: config.getOrThrow<string>("SESSION_NAME"),
+            resave: true,
+            saveUninitialized: false,
+            cookie: {
+                domain: config.getOrThrow<string>("SESSION_DOMAIN"),
+                maxAge: ms(config.getOrThrow("SESSION_MAX_AGE")),
+                httpOnly: parseBoolean(
+                    config.getOrThrow<string>("SESSION_HTTP_ONLY")
+                ),
+                secure: parseBoolean(
+                    config.getOrThrow<string>("SESSION_SECURE")
+                ),
+                sameSite: "lax",
+            },
+            store: new RedisStore({
+                client: redis,
+                prefix: config.getOrThrow<string>("SESSION_FOLDER"),
+            }),
+        })
+    );
+
+    app.use(passport.initialize());
+    app.use(passport.session());
 
     app.enableCors({
         origin: config.getOrThrow<string>("ALLOWED_ORIGIN"),
         credentials: true,
         exposedHeaders: ["set-cookie"],
     });
-
-    // const document = SwaggerModule.createDocument(
-    //     app,
-    //     new DocumentBuilder()
-    //         .setTitle("ProvPortal API")
-    //         .setDescription("ProvPortal API.")
-    //         .setVersion("1.0.0")
-    //         .build()
-    // );
-
-    // SwaggerModule.setup("api", app, document);
 
     app.setGlobalPrefix("api");
 

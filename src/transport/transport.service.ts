@@ -4,10 +4,10 @@ import * as schema from "../database/schema";
 import { DrizzleAsyncProvider } from "@/database/database.provider";
 import * as orm from "drizzle-orm";
 
-// export interface TransportQuery {
-//     order?: "asc" | "desc";
-//     class?: TransportClassType;
-// }
+export interface TransportQuery {
+    order?: "asc" | "desc";
+    class: schema.TransportClassEnum;
+}
 
 @Injectable()
 export class TransportService {
@@ -17,12 +17,12 @@ export class TransportService {
     ) {}
 
     public async getCurrentTransport(id: number) {
-        const transport = await this.db
+        const [transport] = await this.db
             .select()
             .from(schema.transport)
             .where(orm.eq(schema.transport.id, id));
 
-        return transport[0];
+        return transport;
     }
 
     public async getNamesTransport() {
@@ -36,16 +36,16 @@ export class TransportService {
         return transportNames;
     }
 
-    // public async getAll(query: TransportQuery = {}) {
-    //     const order = query.order || "asc";
-    //     const transportClass = query.class;
+    public async getAll(query: TransportQuery) {
+        const order = query.order || "asc";
+        const transportClass = query.class;
 
-    //     const transport = await this.db
-    //         .select()
-    //         .from(schema.transport)
-    //         .where(orm.eq(schema.transport, transportClass))
-    //         .orderBy(schema.transport.price);
+        const transport = await this.db
+            .select()
+            .from(schema.transport)
+            .where(orm.eq(schema.transport.class, transportClass))
+            .orderBy(schema.transport.price);
 
-    //     return transport;
-    // }
+        return transport;
+    }
 }

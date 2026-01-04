@@ -1,6 +1,6 @@
 {
-  "id": "4bfd87a6-1dd8-4a4b-b6f1-90c883814124",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "455efbb3-b2ee-4735-a08f-7a5fcd1b755c",
+  "prevId": "2de52f90-522f-4ae6-ab12-c35aabc16774",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -716,8 +716,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.email_verifications": {
-      "name": "email_verifications",
+    "public.tokens": {
+      "name": "tokens",
       "schema": "",
       "columns": {
         "id": {
@@ -731,7 +731,7 @@
           "name": "token",
           "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "user_id": {
           "name": "user_id",
@@ -739,18 +739,31 @@
           "primaryKey": false,
           "notNull": true
         },
+        "token_type": {
+          "name": "token_type",
+          "type": "token_type",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
         "expires_at": {
           "name": "expires_at",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         }
       },
       "indexes": {},
       "foreignKeys": {
-        "email_verifications_user_id_users_id_fk": {
-          "name": "email_verifications_user_id_users_id_fk",
-          "tableFrom": "email_verifications",
+        "tokens_user_id_users_id_fk": {
+          "name": "tokens_user_id_users_id_fk",
+          "tableFrom": "tokens",
           "tableTo": "users",
           "columnsFrom": [
             "user_id"
@@ -763,7 +776,15 @@
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
+      "uniqueConstraints": {
+        "tokens_token_unique": {
+          "name": "tokens_token_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "token"
+          ]
+        }
+      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
@@ -953,6 +974,15 @@
         "USER",
         "ADMIN",
         "MODERATOR"
+      ]
+    },
+    "public.token_type": {
+      "name": "token_type",
+      "schema": "public",
+      "values": [
+        "VERIFICATION",
+        "TWO_FACTOR",
+        "PASSWORD_RESET"
       ]
     }
   },

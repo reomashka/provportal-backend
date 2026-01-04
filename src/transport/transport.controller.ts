@@ -1,16 +1,16 @@
-import { Controller, Get, Param, ParseIntPipe } from "@nestjs/common";
-import { TransportService } from "./transport.service";
+import { Controller, Get, Param, ParseIntPipe, Query } from "@nestjs/common";
+import { TransportQuery, TransportService } from "./transport.service";
 
 @Controller("transport")
 export class TransportController {
     constructor(private readonly transportService: TransportService) {}
 
-    // @Get("get-all")
-    // async getAllTransport(@Query() query: TransportQuery) {
-    //     return this.transportService.getAll(query);
-    // }
+    @Get("")
+    async getAllTransport(@Query() query: TransportQuery) {
+        return this.transportService.getAll(query);
+    }
 
-    @Get("get-one/:id")
+    @Get(":id")
     async getCurrentTransport(@Param("id", ParseIntPipe) id: number) {
         return this.transportService.getCurrentTransport(id);
     }
