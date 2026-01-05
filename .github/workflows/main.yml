@@ -13,6 +13,13 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v3
 
+            - name: Notify Telegram (start)
+              run: |
+              curl -s -X POST https://api.telegram.org/bot${{ secrets.TG_BOT_TOKEN }}/sendMessage \
+              -d chat_id=${{ secrets.TG_CHAT_ID }} \
+              -d text="🚀 Деплой backend начался\nRepo: ${{ github.repository }}\nCommit: ${{ github.sha }}"
+
+
             - name: Deploy via SSH
               uses: appleboy/ssh-action@v1.1.0
               with:
@@ -26,3 +33,18 @@ jobs:
                       docker compose down
                       docker compose build --no-cache
                       docker compose up -d
+
+
+            - name: Notify Telegram (success)
+              if: success()
+              run: |
+              curl -s -X POST https://api.telegram.org/bot${{ secrets.TG_BOT_TOKEN }}/sendMessage \
+              -d chat_id=${{ secrets.TG_CHAT_ID }} \
+              -d text="✅ Деплой backend УСПЕШЕН\nCommit: ${{ github.sha }}"
+
+            - name: Notify Telegram (failure)
+              if: failure()
+              run: |
+              curl -s -X POST https://api.telegram.org/bot${{ secrets.TG_BOT_TOKEN }}/sendMessage \
+              -d chat_id=${{ secrets.TG_CHAT_ID }} \
+              -d text="❌ Деплой backend УПАЛ\nCommit: ${{ github.sha }}\nСмотри GitHub Actions 😬"
