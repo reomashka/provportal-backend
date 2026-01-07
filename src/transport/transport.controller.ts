@@ -5,7 +5,7 @@ import { TransportQuery, TransportService } from "./transport.service";
 export class TransportController {
     constructor(private readonly transportService: TransportService) {}
 
-    @Get("")
+    @Get()
     async getAllTransport(@Query() query: TransportQuery) {
         return this.transportService.getAll(query);
     }

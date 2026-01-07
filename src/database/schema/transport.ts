@@ -5,6 +5,7 @@ import {
     numeric,
     boolean,
     pgEnum,
+    json,
 } from "drizzle-orm/pg-core";
 
 export const TransportClass = pgEnum("transport_class", [
@@ -87,6 +88,18 @@ export const TransportType = pgEnum("transport_type", [
 // Тип привода
 export const DriveType = pgEnum("drive_type", ["FRONT", "REAR", "ALL"]);
 
+export type TransportCustomization = {
+    paint: {
+        interior: string | null;
+        primary: string | null;
+        secondary: string | null;
+        tertiary: string | null;
+        antichrome: boolean | null;
+    };
+    accessories: { name: string; price: number }[];
+    rims: string | null;
+};
+
 export const transport = pgTable("transport", {
     id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
     name: text("name").notNull(),
@@ -110,14 +123,8 @@ export const transport = pgTable("transport", {
     city: ShowroomCity("city"),
     country: CountryOrigin("country_origin"),
     stageCounter: integer("stage_counter"),
-    paintInter: text("paint_inter"),
-    paintFirst: text("paint_first"),
-    paintSecond: text("paint_second"),
-    paintThird: text("paint_third"),
-    antichrome: boolean("antichrome"),
-    accessories: text("accessories"),
-    rims: text("rims"),
     gosCostOld: integer("gos_cost_old").array(),
     class: TransportClass("class"),
     units: integer("units"),
+    customization: json("customization").$type<TransportCustomization>(),
 });

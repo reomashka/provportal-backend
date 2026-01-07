@@ -1,0 +1,1005 @@
+{
+  "id": "3a5aed77-1718-4e09-845f-8b3f2928a9a3",
+  "prevId": "455efbb3-b2ee-4735-a08f-7a5fcd1b755c",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.transport": {
+      "name": "transport",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "transport_id_seq",
+            "schema": "public",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "cache": "1",
+            "cycle": false
+          }
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "unique_name": {
+          "name": "unique_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "price": {
+          "name": "price",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "full_speed": {
+          "name": "full_speed",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "speed_100_time": {
+          "name": "speed_100_time",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "speed_max_time": {
+          "name": "speed_max_time",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "volume_tank": {
+          "name": "volume_tank",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "fuel_type": {
+          "name": "fuel_type",
+          "type": "fuel_type",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "slots": {
+          "name": "slots",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "seats": {
+          "name": "seats",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lite_insurance": {
+          "name": "lite_insurance",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "repair_without_ins": {
+          "name": "repair_without_ins",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "has_stand_ins": {
+          "name": "has_stand_ins",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "has_exc_ins": {
+          "name": "has_exc_ins",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "type_body": {
+          "name": "type_body",
+          "type": "transport_type",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "showroom": {
+          "name": "showroom",
+          "type": "showroom",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "drive_type": {
+          "name": "drive_type",
+          "type": "drive_type",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "epp": {
+          "name": "epp",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "city": {
+          "name": "city",
+          "type": "showroom_city",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "country_origin": {
+          "name": "country_origin",
+          "type": "country_origin",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "stage_counter": {
+          "name": "stage_counter",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "paint_inter": {
+          "name": "paint_inter",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "paint_first": {
+          "name": "paint_first",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "paint_second": {
+          "name": "paint_second",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "paint_third": {
+          "name": "paint_third",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "antichrome": {
+          "name": "antichrome",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "accessories": {
+          "name": "accessories",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "rims": {
+          "name": "rims",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "gos_cost_old": {
+          "name": "gos_cost_old",
+          "type": "integer[]",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "class": {
+          "name": "class",
+          "type": "transport_class",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "units": {
+          "name": "units",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "customization": {
+          "name": "customization",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.events": {
+      "name": "events",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "events_id_seq",
+            "schema": "public",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "cache": "1",
+            "cycle": false
+          }
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "start_date": {
+          "name": "start_date",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "end_date": {
+          "name": "end_date",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.items": {
+      "name": "items",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "items_id_seq",
+            "schema": "public",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "cache": "1",
+            "cycle": false
+          }
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "category": {
+          "name": "category",
+          "type": "accessory_category",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "subtype": {
+          "name": "subtype",
+          "type": "accessory_subtype",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "price": {
+          "name": "price",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "currency": {
+          "name": "currency",
+          "type": "currency",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "slots": {
+          "name": "slots",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "event_id": {
+          "name": "event_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "items_event_id_events_id_fk": {
+          "name": "items_event_id_events_id_fk",
+          "tableFrom": "items",
+          "tableTo": "events",
+          "columnsFrom": [
+            "event_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.announcements": {
+      "name": "announcements",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "title": {
+          "name": "title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "type": {
+          "name": "type",
+          "type": "announcement_type",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "date": {
+          "name": "date",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.job_city_salaries": {
+      "name": "job_city_salaries",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "job_city_salaries_id_seq",
+            "schema": "public",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "cache": "1",
+            "cycle": false
+          }
+        },
+        "job_id": {
+          "name": "job_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "city": {
+          "name": "city",
+          "type": "city",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "amount": {
+          "name": "amount",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "time": {
+          "name": "time",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "exp": {
+          "name": "exp",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "stops": {
+          "name": "stops",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "job_city_salaries_job_id_jobs_id_fk": {
+          "name": "job_city_salaries_job_id_jobs_id_fk",
+          "tableFrom": "job_city_salaries",
+          "tableTo": "jobs",
+          "columnsFrom": [
+            "job_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.jobs": {
+      "name": "jobs",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "jobs_id_seq",
+            "schema": "public",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "cache": "1",
+            "cycle": false
+          }
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lvl": {
+          "name": "lvl",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "about": {
+          "name": "about",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.truck_salaries": {
+      "name": "truck_salaries",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "truck_salaries_id_seq",
+            "schema": "public",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "cache": "1",
+            "cycle": false
+          }
+        },
+        "job_id": {
+          "name": "job_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "type_transport": {
+          "name": "type_transport",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "type_cargo": {
+          "name": "type_cargo",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "type_semitrailer": {
+          "name": "type_semitrailer",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "salary_private": {
+          "name": "salary_private",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "truck_salaries_job_id_jobs_id_fk": {
+          "name": "truck_salaries_job_id_jobs_id_fk",
+          "tableFrom": "truck_salaries",
+          "tableTo": "jobs",
+          "columnsFrom": [
+            "job_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "truck_salaries_job_id_unique": {
+          "name": "truck_salaries_job_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "job_id"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.users": {
+      "name": "users",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "email": {
+          "name": "email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "password_hash": {
+          "name": "password_hash",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "role": {
+          "name": "role",
+          "type": "role",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'USER'"
+        },
+        "auth_method": {
+          "name": "auth_method",
+          "type": "auth_method",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'CREDENTIALS'"
+        },
+        "is_blocked": {
+          "name": "is_blocked",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "is_verified": {
+          "name": "is_verified",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "avatar_url": {
+          "name": "avatar_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "users_email_unique": {
+          "name": "users_email_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "email"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.tokens": {
+      "name": "tokens",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "token": {
+          "name": "token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "token_type": {
+          "name": "token_type",
+          "type": "token_type",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "expires_at": {
+          "name": "expires_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "tokens_user_id_users_id_fk": {
+          "name": "tokens_user_id_users_id_fk",
+          "tableFrom": "tokens",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "tokens_token_unique": {
+          "name": "tokens_token_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "token"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {
+    "public.country_origin": {
+      "name": "country_origin",
+      "schema": "public",
+      "values": [
+        "USSR_RUSSIA",
+        "USA",
+        "GERMANY",
+        "FRANCE",
+        "ITALY",
+        "SWEDEN",
+        "UK",
+        "JAPAN",
+        "CZECH_REPUBLIC",
+        "UKRAINE",
+        "BELARUS",
+        "AUSTRIA",
+        "SOUTH_KOREA",
+        "USSR_HUNGARY",
+        "USSR_UKRAINE",
+        "CHINA"
+      ]
+    },
+    "public.drive_type": {
+      "name": "drive_type",
+      "schema": "public",
+      "values": [
+        "FRONT",
+        "REAR",
+        "ALL"
+      ]
+    },
+    "public.fuel_type": {
+      "name": "fuel_type",
+      "schema": "public",
+      "values": [
+        "AI92",
+        "AI95",
+        "AI98",
+        "AI100",
+        "DT",
+        "ELECTRIC"
+      ]
+    },
+    "public.showroom": {
+      "name": "showroom",
+      "schema": "public",
+      "values": [
+        "AVTOMAKS",
+        "MERCURY_AUTO",
+        "ROFL",
+        "WORLD_OF_AUTO",
+        "OGONEK"
+      ]
+    },
+    "public.showroom_city": {
+      "name": "showroom_city",
+      "schema": "public",
+      "values": [
+        "PRIVOLZHSK",
+        "NEVSKY",
+        "MIRNY"
+      ]
+    },
+    "public.transport_class": {
+      "name": "transport_class",
+      "schema": "public",
+      "values": [
+        "PASSENGER",
+        "CARGO",
+        "MOTO",
+        "PUBLIC",
+        "CONTAINER",
+        "EXCLUSIVE",
+        "FRACTION"
+      ]
+    },
+    "public.transport_type": {
+      "name": "transport_type",
+      "schema": "public",
+      "values": [
+        "HATCHBACK",
+        "SEDAN",
+        "COUPE",
+        "LIFTBACK",
+        "UNIVERSAL",
+        "CROSSOVER",
+        "VAN",
+        "VNEDOROZNIK",
+        "MINIBUS",
+        "BUS",
+        "TYAGACH",
+        "TRUCK",
+        "PICKUP",
+        "CABRIOLET",
+        "MOTOCYCLE"
+      ]
+    },
+    "public.accessory_category": {
+      "name": "accessory_category",
+      "schema": "public",
+      "values": [
+        "HEADWEAR",
+        "ACCESSORY",
+        "BAG",
+        "CAR_ACCESSORY"
+      ]
+    },
+    "public.accessory_subtype": {
+      "name": "accessory_subtype",
+      "schema": "public",
+      "values": [
+        "CAP",
+        "HAT",
+        "HELMET",
+        "BUCKET_HAT",
+        "BEANIE",
+        "GLASSES",
+        "MASK",
+        "UMBRELLA",
+        "BACK_ACCESSORY",
+        "TENT",
+        "SPEAKER",
+        "HEADPHONES",
+        "GUITAR",
+        "BACKPACK",
+        "WAIST_BAG",
+        "GUITAR_CASE",
+        "CLUTCH",
+        "BRIEFCASE",
+        "TRAVEL_BAG",
+        "BAG",
+        "VINYL",
+        "RIMS",
+        "LICENSE_PLATE_FRAME"
+      ]
+    },
+    "public.currency": {
+      "name": "currency",
+      "schema": "public",
+      "values": [
+        "PUMPKINS",
+        "BP_LEVEL",
+        "CASE",
+        "FLOWERS",
+        "VIRTS",
+        "MANDARINS"
+      ]
+    },
+    "public.announcement_type": {
+      "name": "announcement_type",
+      "schema": "public",
+      "values": [
+        "NEWS",
+        "UPDATE"
+      ]
+    },
+    "public.city": {
+      "name": "city",
+      "schema": "public",
+      "values": [
+        "PRIVOLZHSK",
+        "NEVSKY",
+        "MIRNY",
+        "VOLCHANSK",
+        "ZHUKOVSKIY"
+      ]
+    },
+    "public.auth_method": {
+      "name": "auth_method",
+      "schema": "public",
+      "values": [
+        "CREDENTIALS",
+        "GOOGLE",
+        "YANDEX"
+      ]
+    },
+    "public.role": {
+      "name": "role",
+      "schema": "public",
+      "values": [
+        "USER",
+        "ADMIN",
+        "MODERATOR"
+      ]
+    },
+    "public.token_type": {
+      "name": "token_type",
+      "schema": "public",
+      "values": [
+        "VERIFICATION",
+        "TWO_FACTOR",
+        "PASSWORD_RESET"
+      ]
+    }
+  },
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

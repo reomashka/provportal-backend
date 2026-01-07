@@ -1,0 +1,1 @@
+ALTER TABLE "transport" ADD COLUMN "customization" json;
